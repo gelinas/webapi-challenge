@@ -1,95 +1,49 @@
 const express = require('express');
-const Projects = require('./projectModel.js');
 const Actions = require('./actionModel.js');
 
 const router = express.Router();
 
-// CRUD on Projects
+// CRUD on Actions
 
 router.get('/', (req, res) => {
-    Projects.get()
-    .then(projects => {
-        res.status(200).json(projects)
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: 'Error retrieving the projects' })
-    })
-});
-
-router.post('/', validateProject, (req, res) => {
-    // console.log("router.post", req.body);
-
-    const project = req.body;
-
-    Projects.insert(project)
-    .then(project => {
-        res.status(201).json(project)
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: 'Error creating the project'} )
-    })
-});
-
-router.get('/:id', validateProjectId, (req, res) => {
-    res.status(200).json(req.project);
-});
-
-router.put('/:id', validateProjectId, validateProject, (req, res) => {
-    const projectUpdate = req.body;
-
-    Projects.update(req.project.id, projectUpdate)
-    .then(project => {
-        res.status(200).json(project)
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({ message: 'Error retrieving the project'} )
-    })
-});
-
-router.delete('/:id', validateProjectId, (req, res) => {
-    const { id } = req.params;
-    Projects.remove(id)
-    .then(project => {
-        res.status(200).json({ message: 'The project has been deleted.' })
-    })
-    .catch(err => {
-        res.status(500).json({ message: 'Error deleting the project' })
-    });
-});
-
-// CRUD on Actions within projects route
-
-router.get('/:id/actions', validateProjectId, (req, res) => {
-    const { id } = req.params;
-
-    Projects.getProjectActions(id) 
+    Actions.get()
     .then(actions => {
-        res.status(200).json(actions);
+        res.status(200).json(actions)
     })
     .catch(err => {
         console.log(err);
-        res.status(500).json( { message: 'Error retrieving the actions' })
+        res.status(500).json({ message: 'Error retrieving the actions' })
     })
 });
 
-router.post('/:id/actions', validateProjectId, validateAction, (req, res) => {
-    let newAction = req.body;
-    // console.log(newPost);
-    newAction = {
-        ...newAction,
-        project_id: req.project.id
-    }
-    Actions.insert(newAction)
+// post new actions within the Project Router in order to include Project ID
+
+router.get('/:actionId', validateActionId, (req, res) => {
+    res.status(200).json(req.action);
+});
+
+router.put('/:actionId', validateActionId, validateAction, (req, res) => {
+    const actionUpdate = req.body;
+
+    Actions.update(req.action.id, actionUpdate)
     .then(action => {
-        res.status(201).json(action)
+        res.status(200).json(action)
     })
     .catch(err => {
         console.log(err);
-        res.status(500).json({ message: 'Error adding the action' })
+        res.status(500).json({ message: 'Error retrieving the action'} )
     })
+});
+
+router.delete('/:actionId', validateActionId, (req, res) => {
+    const { actionId } = req.params;
+    Actions.remove(actionId)
+    .then(action => {
+        res.status(200).json({ message: 'The action has been deleted.' })
+    })
+    .catch(err => {
+        res.status(500).json({ message: 'Error deleting the action' })
+    });
 });
 
 //custom middleware
@@ -180,5 +134,37 @@ function validateAction(req, res, next) {
         next();
     }
   }
+
+
+// router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
+//     let newPost = req.body;
+//     console.log(newPost);
+//     newPost = {
+//         ...newPost,
+//         user_id: req.user.id
+//     }
+//     Posts.insert(newPost)
+//     .then(post => {
+//         res.status(201).json(post)
+//     })
+//     .catch(err => {
+//         console.log(err);
+//         res.status(500).json({ message: 'Error adding the post' })
+//     })
+// });
+
+// router.get('/:id/posts', validateUserId, (req, res) => {
+//     const { id } = req.params;
+
+//     Users.getUserPosts(id) 
+//     .then(posts => {
+//         res.status(200).json(posts);
+//     })
+//     .catch(err => {
+//         console.log(err);
+//         res.status(500).json( { message: 'Error retrieving the posts' })
+//     })
+// });
+
 
 module.exports = router;
