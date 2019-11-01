@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const helmet = require('helmet') // third-party secure middleware
 const logger = require('./api/logger.js'); // custom logger middleware
 
@@ -9,6 +10,7 @@ const actionRouter = require('./data/helpers/actionRouter.js');
 const server = express();
 
 // middleware
+server.use(cors());
 server.use(helmet()); // third party middleware
 server.use(express.json()); // built-in middleware
 
