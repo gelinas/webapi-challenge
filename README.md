@@ -26,13 +26,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+Express includes several kinds of middleware. One is routers, which routes your request to different handlers within your server. Another is the response object, which gives you a lot of really useful tools for responding to HTTP requests of different kinds
+
 - [ ] Describe Middleware?
+
+Middleware is a piece of functional software that is like an person/robot on an assembly line. The middleware performs a series of modifications on an action (in this case a HTTP request) and passes it on to the next piece of middleware.
 
 - [ ] Describe a Resource?
 
+A resource is a file on server! It could be anything, website, image, executable code. The purpose of uniform resource locaters and web servers is to give every resource a unique address so that you can access them from anywhere.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+Status codes! 200 for success, 400 for client side error, 500 for server side error.
+
 - [ ] How can we partition our application into sub-applications?
+
+Using routers and middleware. Routers let you parcel endpoints out into their own files and file trees for clarity, seperation of concerns, and succintness of code.
 
 ## Project Setup
 
@@ -68,13 +78,13 @@ The `projectModel.js` helper includes an extra method called `getProjectActions(
 
 ## Minimum Viable Product
 
-- [ ] Configure an _npm script_ named _"server"_ that will execute your code using _nodemon_. Make _nodemon_ be a development time dependency only, it shouldn't be deployed to production.
-- [ ] Configure an _npm script_ named _"start"_ that will execute your code using _node_.
+- [X] Configure an _npm script_ named _"server"_ that will execute your code using _nodemon_. Make _nodemon_ be a development time dependency only, it shouldn't be deployed to production.
+- [X] Configure an _npm script_ named _"start"_ that will execute your code using _node_.
 
 Design and build the necessary endpoints to:
 
-- [ ] Perform CRUD operations on _projects_ and _actions_. When adding an action, make sure the `project_id` provided belongs to an existing `project`. If you try to add an action with an `id` of 3 and there is no project with that `id` the database will return an error.
-- [ ] Retrieve the list of actions for a project.
+- [X] Perform CRUD operations on _projects_ and _actions_. When adding an action, make sure the `project_id` provided belongs to an existing `project`. If you try to add an action with an `id` of 3 and there is no project with that `id` the database will return an error.
+- [X] Retrieve the list of actions for a project.
 
 ### Database Schemas
 
